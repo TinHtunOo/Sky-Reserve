@@ -16,13 +16,19 @@ export async function getCurrentUser() {
 }
 
 export async function getCurrentAdmin() {
-  const token = await cookies().get("admin_token")?.value;
+  const cookieStore = cookies();
+  const token = cookieStore.get("admin_token")?.value;
+
   if (!token) return null;
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    return decoded;
-  } catch {
+    const admin = await prisma.admin.findUnique({
+      where: { id: decoded.id },
+    });
+    return admin;
+  } catch (error) {
+    console.error("Admin auth error:", error);
     return null;
   }
 }

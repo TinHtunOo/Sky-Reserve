@@ -262,39 +262,77 @@ export async function addUser(formData) {
   }
 }
 
+// export async function logInAdmin(formData) {
+//   const email = formData.get("email");
+//   const password = formData.get("password");
+
+//   const admin = await prisma.admin.findUnique({
+//     where: { email },
+//   });
+
+//   if (!admin) {
+//     return { error: "Invalid email or password" };
+//   }
+
+//   const isMatch = await bcrypt.compare(password, admin.password);
+//   if (!isMatch) {
+//     return { error: "Invalid email or password" };
+//   }
+
+//   const token = jwt.sign(
+//     { id: admin.id, email: admin.email, role: "admin" },
+//     JWT_SECRET,
+//     {
+//       expiresIn: "7d",
+//     }
+//   );
+
+//   cookies().set("admin_token", token, {
+//     httpOnly: true,
+//     secure: process.env.NODE_ENV === "production",
+//     path: "/",
+//     maxAge: 60 * 60 * 24 * 7,
+//   });
+
+//   return { success: true };
+// }
+
 export async function logInAdmin(formData) {
-  const email = formData.get("email");
-  const password = formData.get("password");
+  try {
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-  const admin = await prisma.admin.findUnique({
-    where: { email },
-  });
+    const admin = await prisma.admin.findUnique({
+      where: { email },
+    });
 
-  if (!admin) {
-    return { error: "Invalid email or password" };
-  }
-
-  const isMatch = await bcrypt.compare(password, admin.password);
-  if (!isMatch) {
-    return { error: "Invalid email or password" };
-  }
-
-  const token = jwt.sign(
-    { id: admin.id, email: admin.email, role: "admin" },
-    JWT_SECRET,
-    {
-      expiresIn: "7d",
+    if (!admin) {
+      return { error: "Invalid email or password" };
     }
-  );
 
-  cookies().set("admin_token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
-  });
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      return { error: "Invalid email or password" };
+    }
 
-  return { success: true };
+    const token = jwt.sign({ id: admin.id, email: admin.email }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    const cookieStore = cookies();
+    cookieStore.set("admin_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Admin login error:", error);
+    return { error: "Failed to log in" };
+  }
 }
 
 export async function editAdmin(formData) {

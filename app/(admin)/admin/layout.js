@@ -11,23 +11,23 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const adminData = await getCurrentAdmin();
+  // const adminData = await getCurrentAdmin();
 
-  const admin = await getAdmin(adminData.id);
-  const { name } = admin.at(0);
-  if (!admin)
-    return (
-      <html lang="en">
-        <body>
-          <NotFoundAdmin />;
-        </body>
-      </html>
-    );
+  // const admin = await getAdmin(adminData.id);
+  // const { name } = admin.at(0);
+  // if (!admin)
+  //   return (
+  //     <html lang="en">
+  //       <body>
+  //         <NotFoundAdmin />;
+  //       </body>
+  //     </html>
+  //   );
   return (
     <html lang="en">
       <body>
         <div className="min-h-[100vh]">
-          <HeaderAdmin name={name} />
+          <HeaderAdmin name="Admin" />
           <div className="flex bg-surface max-h-screen">
             <SideNavBarAdmin />
             <div className="grow mt-[125px] sm:mt-[110px] overflow-hidden overflow-y-auto  max-w-full">

@@ -1,11 +1,13 @@
 "use client";
 import { logInAdmin } from "../_lib/action";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
 function LoginFormAdmin() {
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -15,7 +17,8 @@ function LoginFormAdmin() {
       setError(result.error);
     } else {
       setError("");
-      redirect("/admin");
+      router.push("/admin");
+      router.refresh();
     }
   }
   return (
