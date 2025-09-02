@@ -4,29 +4,30 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // Vercel Postgres URL
+  directUrl = env("POSTGRES_URL_NON_POOLING") // Vercel Postgres Direct URL for migrations
 }
 
 model flights {
   id                 Int        @id @default(autoincrement())
-  airline            String?    @db.VarChar(50)
-  airlineLogo        String?    @db.VarChar(100)
-  origin             String?    @db.VarChar(50)
-  destination        String?    @db.VarChar(50)
-  originAirport      String?    @db.VarChar(100)
-  destinationAirport String?    @db.VarChar(100)
-  departureDate      DateTime?  @db.Date
-  departureTime      DateTime?  @db.Time(0)
-  departureTimeRange String?    @db.VarChar(20)
-  arrivalTime        DateTime?  @db.Time(0)
-  arrivalDate        DateTime?  @db.Date
+  airline            String?    
+  airlineLogo        String?    
+  origin             String?    
+  destination        String?    
+  originAirport      String?    
+  destinationAirport String?    
+  departureDate      DateTime?  
+  departureTime      DateTime?  
+  departureTimeRange String?    
+  arrivalTime        DateTime?  
+  arrivalDate        DateTime?  
   price              Decimal?   @db.Decimal(10, 2)
   stops              Int?
   duration           Int?
-  boardingTime       DateTime?  @db.Time(0)
-  flightNumber       String?    @db.VarChar(20)
-  cabinClass         String?    @db.VarChar(20)
+  boardingTime       DateTime?  
+  flightNumber       String?    
+  cabinClass         String?    
   bookings           bookings[]
 }
 
@@ -34,8 +35,8 @@ model bookings {
   id         Int       @id @default(autoincrement())
   user_id    Int
   flight_id  Int
-  created_at DateTime? @default(now()) @db.DateTime(0)
-  status     String?   @default("pending") @db.VarChar(50)
+  created_at DateTime? @default(now())
+  status     String?   @default("pending")
   users      users     @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "bookings_ibfk_1")
   flights    flights   @relation(fields: [flight_id], references: [id], onUpdate: Restrict, map: "bookings_ibfk_2")
 
@@ -45,16 +46,16 @@ model bookings {
 
 model users {
   id         Int        @id @default(autoincrement())
-  full_name  String     @db.VarChar(100)
-  email      String     @unique(map: "email") @db.VarChar(100)
-  password   String     @db.VarChar(255)
-  created_at DateTime?  @default(now()) @db.DateTime(0)
+  full_name  String     
+  email      String     @unique(map: "users_email_unique")
+  password   String     
+  created_at DateTime?  @default(now())
   bookings   bookings[]
 }
 
 model admin {
   id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(100)
-  email    String @unique(map: "email") @db.VarChar(100)
-  password String @db.VarChar(255)
+  name     String 
+  email    String @unique(map: "admin_email_unique")
+  password String 
 }
