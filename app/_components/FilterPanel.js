@@ -45,9 +45,9 @@ export default function FilterPanel() {
               <input
                 type="radio"
                 name="cabinClass"
-                value="economy"
-                checked={cabinClass === "economy"}
-                onChange={() => handleFilterChange("cabinClass", "economy")}
+                value="Economy"
+                checked={cabinClass === "Economy"}
+                onChange={() => handleFilterChange("cabinClass", "Economy")}
                 className="accent-brand cursor-pointer"
               />
               Economy
@@ -57,23 +57,12 @@ export default function FilterPanel() {
               <input
                 type="radio"
                 name="cabinClass"
-                value="business"
-                checked={cabinClass === "business"}
-                onChange={() => handleFilterChange("cabinClass", "business")}
+                value="Business"
+                checked={cabinClass === "Business"}
+                onChange={() => handleFilterChange("cabinClass", "Business")}
                 className="accent-brand cursor-pointer"
               />
               Business
-            </label>
-            <label className="flex items-center gap-2  text-sm">
-              <input
-                type="radio"
-                name="cabinClass"
-                value="first"
-                checked={cabinClass === "first"}
-                onChange={() => handleFilterChange("cabinClass", "first")}
-                className="accent-brand cursor-pointer"
-              />
-              First Class
             </label>
           </div>
         </div>
