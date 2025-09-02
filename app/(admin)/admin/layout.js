@@ -12,6 +12,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const adminData = await getCurrentAdmin();
+
   const admin = await getAdmin(adminData.id);
   const { name } = admin.at(0);
   if (!admin)
