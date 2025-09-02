@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  /* Font families */
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Color palette */
+  --color-brand-light: #54bbe4;
+  --color-brand: #009aee;
+  --color-brand-dark: #1244b8;
+
+  --color-fg: #24282a;
+  --color-fg-muted: #727d83;
+  --color-fg-faint: #8c9ba3;
+
+  --color-stroke: #8c9ba3;
+  --color-stroke-faint: #c5d6df;
+
+  --color-bg: #ffffff;
+  --color-surface: #f8f8ff;
+  --animate-fadeIn: fadeIn 1s ease-in-out infinite;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 100;
+    }
+  }
+}
+
+body {
+  @apply font-body bg-bg text-fg;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  @apply text-4xl md:text-[56px] leading-[40px] md:leading-[56px]  font-heading;
+}
+
+.h2 {
+  @apply text-2xl md:text-4xl leading-[30px] tracking-[-1px] font-heading;
+}
+
+.h3 {
+  @apply text-xl md:text-2xl leading-[40px]  font-heading;
+}
+
+.h4 {
+  @apply text-lg md:text-xl leading-[25px]  font-heading;
+}
+
+.text-default {
+  @apply text-sm md:text-base leading-5 tracking-[0.5px] font-body;
+}
+
+.text-small {
+  @apply text-xs leading-4 font-body;
+}
+
+@media (max-width: 889px) {
+  .hide-below-890 {
+    display: none;
+  }
+}

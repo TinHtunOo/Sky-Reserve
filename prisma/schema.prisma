@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model flights {
+  id                 Int        @id @default(autoincrement())
+  airline            String?    @db.VarChar(50)
+  airlineLogo        String?    @db.VarChar(100)
+  origin             String?    @db.VarChar(50)
+  destination        String?    @db.VarChar(50)
+  originAirport      String?    @db.VarChar(100)
+  destinationAirport String?    @db.VarChar(100)
+  departureDate      DateTime?  @db.Date
+  departureTime      DateTime?  @db.Time(0)
+  departureTimeRange String?    @db.VarChar(20)
+  arrivalTime        DateTime?  @db.Time(0)
+  arrivalDate        DateTime?  @db.Date
+  price              Decimal?   @db.Decimal(10, 2)
+  stops              Int?
+  duration           Int?
+  boardingTime       DateTime?  @db.Time(0)
+  flightNumber       String?    @db.VarChar(20)
+  cabinClass         String?    @db.VarChar(20)
+  bookings           bookings[]
+}
+
+model bookings {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  flight_id  Int
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  status     String?   @default("pending") @db.VarChar(50)
+  users      users     @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "bookings_ibfk_1")
+  flights    flights   @relation(fields: [flight_id], references: [id], onUpdate: Restrict, map: "bookings_ibfk_2")
+
+  @@index([flight_id], map: "flight_id")
+  @@index([user_id], map: "user_id")
+}
+
+model users {
+  id         Int        @id @default(autoincrement())
+  full_name  String     @db.VarChar(100)
+  email      String     @unique(map: "email") @db.VarChar(100)
+  password   String     @db.VarChar(255)
+  created_at DateTime?  @default(now()) @db.DateTime(0)
+  bookings   bookings[]
+}
+
+model admin {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(100)
+  email    String @unique(map: "email") @db.VarChar(100)
+  password String @db.VarChar(255)
+}
