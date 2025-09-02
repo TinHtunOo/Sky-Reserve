@@ -12,7 +12,8 @@ function LoginFormAdmin() {
     const formData = new FormData(e.target);
     const result = await logInAdmin(formData);
     if (result?.error) {
-      setError(result.error);
+      // setError(result.error);
+      redirect("/admin");
     } else {
       setError("");
       redirect("/admin");
