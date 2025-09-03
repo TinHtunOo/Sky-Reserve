@@ -23,10 +23,7 @@ export async function getCurrentAdmin() {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const admin = await prisma.admin.findUnique({
-      where: { id: decoded.id },
-    });
-    return admin;
+    return decoded;
   } catch (error) {
     console.error("Admin auth error:", error);
     return null;
