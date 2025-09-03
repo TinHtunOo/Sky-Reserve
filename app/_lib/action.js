@@ -330,6 +330,7 @@ export async function logInAdmin(formData) {
 
     return { success: true };
   } catch (error) {
+    console.log(error);
     console.error("Admin login error:", error);
     return { error: "Failed to log in" };
   }
