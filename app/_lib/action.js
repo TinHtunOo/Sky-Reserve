@@ -301,11 +301,12 @@ export async function logInAdmin(formData) {
   try {
     const email = formData.get("email");
     const password = formData.get("password");
+    console.log(email, password);
 
     const admin = await prisma.admin.findUnique({
       where: { email },
     });
-
+    console.log(admin);
     if (!admin) {
       return { error: "Invalid email or password" };
     }
