@@ -167,6 +167,11 @@ const airlineLogos = {
 
 export async function addFlight(formData) {
   try {
+    const lastFlight = await prisma.flights.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
     const airline = formData.get("airline");
     const airlineLogo = airlineLogos[airline] || "default-logo.png";
     const departureDate = new Date(formData.get("departureDate"));
@@ -199,6 +204,7 @@ export async function addFlight(formData) {
     const boarding = new Date(toLocalISOTime(departureTime));
     boarding.setHours(boarding.getHours() - 3);
     const flight = {
+      id: lastFlight ? lastFlight.id + 1 : 1,
       airline,
       airlineLogo,
       flightNumber: formData.get("flightNumber"),

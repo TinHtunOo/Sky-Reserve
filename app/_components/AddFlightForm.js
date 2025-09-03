@@ -165,7 +165,6 @@ function AddFlightForm({ setShowForm }) {
               >
                 <option value="Economy">Economy</option>
                 <option value="Business">Business</option>
-                <option value="First">First</option>
               </select>
             </div>
           </div>
