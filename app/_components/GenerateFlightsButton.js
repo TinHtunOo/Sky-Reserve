@@ -1,7 +1,6 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { revalidatePath } from "next/cache";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -24,7 +23,6 @@ export default function GenerateFlightsButton() {
       toast.success(
         `Created ${data.created || data.created?.length || count} flights`
       );
-      revalidatePath("/admin/flightsadmin");
     } catch (err) {
       toast.error(err.message || "Error");
     } finally {
