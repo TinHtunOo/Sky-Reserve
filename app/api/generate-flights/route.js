@@ -118,7 +118,7 @@ export async function POST(req) {
 
     // createMany for performance (IDs are auto-incremented by Prisma)
     await prisma.flights.createMany({
-      data: generated,
+      data: [generated],
       skipDuplicates: true,
     });
 
