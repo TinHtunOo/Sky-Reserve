@@ -36,7 +36,6 @@ const airportOptions = [
   { label: "Seoul", value: "Seoul" },
   { label: "New York", value: "New York" },
   { label: "Amsterdam", value: "Amsterdam" },
-  { label: "London", value: "London" },
 ];
 
 function SearchFlight() {
