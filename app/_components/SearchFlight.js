@@ -33,14 +33,18 @@ const airportOptions = [
   { label: "Thandwe", value: "Thandwe" },
   { label: "Tokyo", value: "Tokyo" },
   { label: "Yangon", value: "Yangon" },
+  { label: "Seoul", value: "Seoul" },
+  { label: "New York", value: "New York" },
+  { label: "Amsterdam", value: "Amsterdam" },
+  { label: "London", value: "London" },
 ];
 
 function SearchFlight() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const initialOrigin = searchParams.get("origin") || "Bangkok";
-  const initialDistination = searchParams.get("destination") || "Singapore";
+  const initialOrigin = searchParams.get("origin") || "Yangon";
+  const initialDistination = searchParams.get("destination") || "Bangkok";
   const initialTrip = searchParams.get("tripType") || "one-way";
   const [trip, setTrip] = useState(initialTrip);
   const [origin, setOrigin] = useState(initialOrigin);

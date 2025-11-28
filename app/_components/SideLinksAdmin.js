@@ -1,5 +1,6 @@
 import { Home, Plane, TicketsPlane, UserPlus } from "lucide-react";
 import Link from "next/link";
+import GenerateFlightsButton from "./GenerateFlightsButton";
 
 function SideLinksAdmin({ isOpen, setIsOpen }) {
   let translate;
@@ -55,6 +56,7 @@ function SideLinksAdmin({ isOpen, setIsOpen }) {
             <span>Add User</span>
           </Link>
         </li>
+        <GenerateFlightsButton />
       </ul>
     </nav>
   );
