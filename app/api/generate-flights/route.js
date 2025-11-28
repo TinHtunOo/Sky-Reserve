@@ -52,6 +52,11 @@ export async function POST(req) {
 
     const generated = [];
     for (let i = 0; i < n; i++) {
+      const lastFlight = await prisma.flights.findFirst({
+        orderBy: {
+          id: "desc",
+        },
+      });
       const airline = airlines[Math.floor(Math.random() * airlines.length)];
       const airlineLogo = airlineLogos[airline];
       // pick two different cities
@@ -79,6 +84,7 @@ export async function POST(req) {
       const price = Math.floor(50 + Math.random() * 950); // 50 - 999
 
       generated.push({
+        id: lastFlight ? lastFlight.id + 1 : 1,
         airline,
         airlineLogo,
         origin,
