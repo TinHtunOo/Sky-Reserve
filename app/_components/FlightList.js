@@ -32,7 +32,10 @@ async function FlightList({
         </h3>
         <p className="text-fg-muted">
           Sorry, we couldn&apos;t find any flights matching your criteria. Try
-          adjusting your search parameters.
+          adjusting your search parameters or <br />{" "}
+          <span className=" text-black  ">
+            clear the date field and search again.
+          </span>
         </p>
       </div>
     );
