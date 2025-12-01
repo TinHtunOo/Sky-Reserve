@@ -1,4 +1,4 @@
-import { LogOut, TicketsPlane, User } from "lucide-react";
+import { TicketsPlane, User } from "lucide-react";
 import Link from "next/link";
 import LogOutButtonAdmin from "./LogOutButtonAdmin";
 
@@ -12,12 +12,17 @@ function HeaderAdmin({ name }) {
 
       <div className="flex   justify-center items-center gap-5">
         <span className="hidden sm:block text-default">{name}</span>
-        <Link
-          href={"/admin/edituser"}
-          className="hover:text-brand p-1 hover:bg-gray-200 rounded-sm"
-        >
-          <User />
-        </Link>
+        <div className="relative group">
+          <Link
+            href={"/admin/edituser"}
+            className="hover:text-brand block p-1 hover:bg-gray-200 rounded-sm"
+          >
+            <User />
+          </Link>
+          <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-max px-2 py-1 rounded bg-black text-white text-xs opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10">
+            Edit User
+          </div>
+        </div>
         <LogOutButtonAdmin />
       </div>
     </div>

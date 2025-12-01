@@ -32,6 +32,7 @@ function LoginFormAdmin() {
           name="email"
           required
           className="w-full px-4 py-2 border rounded-lg  border-stroke-faint"
+          placeholder="superadmin@gmail.com"
         />
       </div>
 
@@ -44,6 +45,7 @@ function LoginFormAdmin() {
           name="password"
           required
           className="w-full px-4 py-2 border rounded-lg  border-stroke-faint"
+          placeholder="12345678"
         />
       </div>
       {error && (
