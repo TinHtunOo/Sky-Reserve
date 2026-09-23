@@ -13,6 +13,7 @@ async function FlightList({
   returnDate,
   tripType,
 }) {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   const flights = await getFlights(
     sortField,
     cabinClass,
