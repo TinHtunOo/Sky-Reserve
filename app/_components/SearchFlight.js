@@ -3,6 +3,7 @@
 import { ArrowRightLeft, Minus, MoveRight, Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { saveSearchCookie } from "@/app/_lib/searchCookie";
 
 const airportOptions = [
   { label: "Bangkok", value: "Bangkok" },
@@ -38,22 +39,31 @@ const airportOptions = [
   { label: "Amsterdam", value: "Amsterdam" },
 ];
 
-function SearchFlight() {
+function SearchFlight({ initialSearch = {} }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const initialOrigin = searchParams.get("origin") || "Yangon";
-  const initialDistination = searchParams.get("destination") || "Bangkok";
-  const initialTrip = searchParams.get("tripType") || "one-way";
+
+  const initialOrigin =
+    searchParams.get("origin") || initialSearch.origin || "Yangon";
+  const initialDistination =
+    searchParams.get("destination") || initialSearch.destination || "Bangkok";
+  const initialTrip =
+    searchParams.get("tripType") || initialSearch.tripType || "one-way";
+
   const [trip, setTrip] = useState(initialTrip);
   const [origin, setOrigin] = useState(initialOrigin);
   const [destination, setDestination] = useState(initialDistination);
-  const [departureDate, setDepartureDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  const [departureDate, setDepartureDate] = useState(
+    searchParams.get("departureDate") || initialSearch.departureDate || "",
+  );
+  const [returnDate, setReturnDate] = useState(
+    searchParams.get("returnDate") || initialSearch.returnDate || "",
+  );
 
   const isOneway = trip === "one-way";
 
-  function handleSearch() {
+  async function handleSearch() {
     const params = new URLSearchParams(searchParams.toString());
     params.set("origin", origin);
     params.set("destination", destination);
@@ -62,8 +72,13 @@ function SearchFlight() {
     else params.delete("departureDate");
     if (returnDate && !isOneway) params.set("returnDate", returnDate);
     else params.delete("returnDate");
-    router.replace(`${pathname}?${params.toString()}`);
+
+    const paramsObj = Object.fromEntries(params.entries());
+    await saveSearchCookie(paramsObj); // remember this search
+
+    router.push(`${pathname}?${params.toString()}`);
   }
+
   return (
     <div className="p-3 md:py-5 md:px-10   border-b border-stroke-faint ">
       <div className="flex gap-5 mb-3 md:mt-0">

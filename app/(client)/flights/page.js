@@ -6,25 +6,31 @@ import Link from "next/link";
 import { getCurrentUser } from "@/app/_lib/auth";
 import { Suspense } from "react";
 import Spinner from "@/app/_components/Spinner";
+import { getSearchCookie } from "@/app/_lib/searchCookie";
 export const metadata = {
   title: "Flights",
 };
 
 export default async function Page({ searchParams }) {
-  const sortField = searchParams?.sortField || "price";
-  const cabinClass = searchParams?.cabinClass || "";
-  const transit = searchParams?.transit || "";
-  const departureTime = searchParams?.departureTime || "";
-  const origin = searchParams?.origin || "Bangkok";
-  const destination = searchParams?.destination || "Singapore";
-  const departureDate = searchParams?.departureDate || "";
-  const returnDate = searchParams?.returnDate || "";
-  const tripType = searchParams?.tripType || "one-way";
+  const sp = await searchParams;
+  const hasParams = sp && Object.keys(sp).length > 0;
+  const saved = !hasParams ? await getSearchCookie() : null;
+  const params = { ...saved, ...sp };
+
+  const sortField = params?.sortField || "price";
+  const cabinClass = params?.cabinClass || "";
+  const transit = params?.transit || "";
+  const departureTime = params?.departureTime || "";
+  const origin = params?.origin || "Yangon";
+  const destination = params?.destination || "Bangkok";
+  const departureDate = params?.departureDate || "";
+  const returnDate = params?.returnDate || "";
+  const tripType = params?.tripType || "one-way";
   const user = await getCurrentUser();
 
   return (
     <div className="max-w-6xl mx-auto mt-20">
-      <SearchFlight />
+      <SearchFlight initialSearch={params} />
       {user ? (
         ""
       ) : (

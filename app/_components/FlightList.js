@@ -22,8 +22,9 @@ async function FlightList({
     destination,
     departureDate,
     returnDate,
-    tripType
+    tripType,
   );
+
   if (!flights || flights.length === 0) {
     return (
       <div className="text-center p-8 bg-surface rounded-lg shadow">
@@ -36,6 +37,7 @@ async function FlightList({
           <span className=" text-black  ">
             clear the date field and search again.
           </span>
+          The dataset is pretty small at the moment.
         </p>
       </div>
     );
