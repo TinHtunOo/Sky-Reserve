@@ -42,7 +42,7 @@ SkyReserve is a full-stack flight ticket booking platform that allows users to s
 
 - Vercel
 
-# ⚙️ Environment Variables
+## ⚙️ Environment Variables
 
 Create a .env.local file for development and set the same values in Vercel Environment Variables for production.
 
