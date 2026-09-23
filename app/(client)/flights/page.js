@@ -34,7 +34,17 @@ export default async function Page({ searchParams }) {
   const returnDate = sp?.returnDate || "";
   const tripType = sp?.tripType || "one-way";
   const user = await getCurrentUser();
-
+  const searchKey = JSON.stringify({
+    sortField,
+    cabinClass,
+    transit,
+    departureTime,
+    origin,
+    destination,
+    departureDate,
+    returnDate,
+    tripType,
+  });
   return (
     <div className="max-w-6xl mx-auto mt-20">
       <SearchFlight initialSearch={sp} />
@@ -63,7 +73,7 @@ export default async function Page({ searchParams }) {
             <SortDropdown />
           </div>
           <div className="overflow-y-auto  mt-4">
-            <Suspense fallback={<Spinner />} key={"FlightList"}>
+            <Suspense fallback={<Spinner />} key={searchKey}>
               <FlightList
                 sortField={sortField}
                 cabinClass={cabinClass}
