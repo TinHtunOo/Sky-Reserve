@@ -63,7 +63,7 @@ function SearchFlight({ initialSearch = {} }) {
 
   const isOneway = trip === "one-way";
 
-  async function handleSearch() {
+  function handleSearch() {
     const params = new URLSearchParams(searchParams.toString());
     params.set("origin", origin);
     params.set("destination", destination);
@@ -74,7 +74,7 @@ function SearchFlight({ initialSearch = {} }) {
     else params.delete("returnDate");
 
     const paramsObj = Object.fromEntries(params.entries());
-    await saveSearchCookie(paramsObj); // remember this search
+    saveSearchCookie(paramsObj); // fire-and-forget, don't block navigation
 
     router.push(`${pathname}?${params.toString()}`);
   }
